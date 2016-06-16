@@ -117,6 +117,11 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     private int distanceToTop;
     private RectF rect;
 
+    public void setSingleThumb(boolean singleThumb) {
+        this.singleThumb = singleThumb;
+        invalidate();
+    }
+
     private boolean singleThumb;
     private boolean alwaysActive;
     private boolean showLabels;
