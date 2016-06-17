@@ -110,6 +110,18 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     }
 
     protected double minimumDelta = 0;
+
+    public int getBarRadius() {
+        return barRadius;
+    }
+
+    public void setBarRadius(int barRadius) {
+        this.barRadius = barRadius;
+        invalidate();
+    }
+
+    protected int barRadius = 0;
+
     private Thumb pressedThumb = null;
     private boolean notifyWhileDragging = false;
     private OnRangeSeekBarChangeListener<T> listener;
@@ -624,7 +636,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         // draw seek bar background line
         rect.left = padding;
         rect.right = getWidth() - padding;
-        canvas.drawRect(rect, paint);
+        canvas.drawRoundRect(rect, barRadius, barRadius, paint);
 
         boolean selectedValuesAreDefault = (normalizedMinValue <= minDeltaForDefault && normalizedMaxValue >= 1 - minDeltaForDefault);
 
@@ -637,7 +649,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
         rect.right = normalizedToScreen(normalizedMaxValue);
 
         paint.setColor(colorToUseForButtonsAndHighlightedLine);
-        canvas.drawRect(rect, paint);
+        canvas.drawRoundRect(rect, barRadius, barRadius, paint); // drawRect(rect, paint);
 
         // draw minimum thumb (& shadow if requested) if not a single thumb control
         if (!singleThumb) {
