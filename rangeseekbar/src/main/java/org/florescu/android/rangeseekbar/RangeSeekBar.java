@@ -100,6 +100,16 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     protected double normalizedMinValue = 0d;
     protected double normalizedMaxValue = 1d;
     protected double minDeltaForDefault = 0;
+
+    public double getMinimumDelta() {
+        return minimumDelta;
+    }
+
+    public void setMinimumDelta(T minimumDelta) {
+        this.minimumDelta = minimumDelta.doubleValue() / (absoluteMaxValuePrim - absoluteMinValuePrim);
+    }
+
+    protected double minimumDelta = 0;
     private Thumb pressedThumb = null;
     private boolean notifyWhileDragging = false;
     private OnRangeSeekBarChangeListener<T> listener;
@@ -781,7 +791,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
      * @param value The new normalized min value to set.
      */
     private void setNormalizedMinValue(double value) {
-        normalizedMinValue = Math.max(0d, Math.min(1d, Math.min(value, normalizedMaxValue)));
+        normalizedMinValue = Math.max(0d, Math.min(1d, Math.min(value, normalizedMaxValue - minimumDelta)));
         invalidate();
     }
 
@@ -791,7 +801,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
      * @param value The new normalized max value to set.
      */
     private void setNormalizedMaxValue(double value) {
-        normalizedMaxValue = Math.max(0d, Math.min(1d, Math.max(value, normalizedMinValue)));
+        normalizedMaxValue = Math.max(0d, Math.min(1d, Math.max(value, normalizedMinValue + minimumDelta)));
         invalidate();
     }
 
